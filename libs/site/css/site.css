@@ -1,0 +1,105 @@
+.my-nav>a>i{
+    display: inline-block;
+    margin-right: 10px;
+}
+.icon {
+    cursor: pointer;
+}
+.my-nav>a>svg{
+    display: inline-block;
+    margin-right: 10px;
+}
+#word-question .main-word{
+
+}
+#word-question .main-word .word{
+    margin-bottom: 5px;
+}
+#word-question .input input{
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding:5px 30px 5px 10px;
+    border:1px solid gray;
+    transition: 0.3s;
+    box-shadow: 0px 0px 0px gray;
+}
+#word-question .input .wrong{
+    border:1px solid red;
+    box-shadow: 0px 0px 0px red;
+}
+#word-question .input .correct{
+    border:1px solid rgb(0, 255, 13);
+    box-shadow: 0px 0px 0px rgb(0, 255, 13);
+}
+#word-question .input input:focus{
+    border-radius: 3px;
+    border:1px solid gray;
+    box-shadow: 0px 0px 3px gray;
+    
+}
+#word-question .input input:focus-visible{
+    outline: none;
+}
+#word-question .input{
+    display: inline-block;
+    position: relative;
+}
+#word-question .input .icon{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: black;
+}
+#word-question .input .correct-icon{
+    color: greenyellow;
+}
+#word-question .input .wrong-icon{
+    color: red;
+}
+#word-question .unit-select{
+
+}
+#word-question .unit-select select{
+    outline: none;
+}
+#main-page .random {
+    margin-top:10px;
+ font-size: 25px;
+ color: rgb(22, 57, 122);
+}
+
+/* UNIT */
+
+
+#UNIT .input input{
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding:5px 30px 5px 10px;
+    border:1px solid gray;
+    transition: 0.3s;
+    box-shadow: 0px 0px 0px gray;
+}
+#UNIT .input input:focus{
+    border-radius: 3px;
+    border:1px solid gray;
+    box-shadow: 0px 0px 3px gray;
+    
+}
+#UNIT .input input:focus-visible{
+    outline: none;
+}
+#UNIT .input{
+    display: inline-block;
+    position: relative;
+}
+#UNIT .input .icon{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    color: black;
+}
+#UNIT ul{
+    margin: 15px 0 0 0;
+}

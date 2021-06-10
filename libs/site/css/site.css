@@ -1,3 +1,6 @@
+input,select{
+    outline: none;   
+}
 .my-nav>a>i{
     display: inline-block;
     margin-right: 10px;
@@ -40,6 +43,7 @@
 #word-question .input input:focus-visible{
     outline: none;
 }
+
 #word-question .input{
     display: inline-block;
     position: relative;
@@ -64,10 +68,12 @@
     outline: none;
 }
 #main-page .random {
+
     margin-top:10px;
  font-size: 25px;
  color: rgb(22, 57, 122);
 }
+#main-page .random svg{cursor: pointer;}
 
 /* UNIT */
 
@@ -102,4 +108,27 @@
 }
 #UNIT ul{
     margin: 15px 0 0 0;
+}
+
+#add-word{
+    
+}
+#add-word input,#add-word select{
+        width: 100%;
+        height: 40px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border:1px solid #443ea2
+}
+#add-word input{
+   text-indent: 5px;
+}
+#add-word input:invalid,#add-word select:invalid{
+    border:1px solid red
+}
+#add-word label{
+    display: block;
+}
+#add-word form{
+    margin: 15px;
 }

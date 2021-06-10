@@ -22,19 +22,20 @@
                                                                                        class="brand-logo"><i
                     class="fas fa-anchor"></i> <span>Word Question</span></a></header>
             <nav class="dashboard-nav-list my-nav">
-                <a href="#" class="dashboard-nav-item"><i class="fas fa-home"></i> Sual cavab </a>
-                <a href="#" id="save-json" class="dashboard-nav-item"><i class="fad fa-save"></i>Json faylina yaz</a>
-                <a href="#" class="dashboard-nav-item active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                <a href="#" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> Upload </a>
-                <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
-                        class="fas fa-photo-video"></i> Media </a>
-                    <div class='dashboard-nav-dropdown-menu'><a href="#"
-                                                                class="dashboard-nav-dropdown-item">All</a><a
-                            href="#" class="dashboard-nav-dropdown-item">Recent</a><a
-                            href="#" class="dashboard-nav-dropdown-item">Images</a><a
-                            href="#" class="dashboard-nav-dropdown-item">Video</a></div>
+                <a href="#" data-id="word-question" class="dashboard-nav-item w-nav-item active"><i class="fas fa-home"></i> Sual cavab </a>
+                <a href="#" id="save-json" class="dashboard-nav-item w-nav-item"><i class="fad fa-save"></i>Json faylına yaz</a>
+                <a href="#" data-id="unit" class="dashboard-nav-item w-nav-item"><i class="fas fa-tachometer-alt"></i>Bölmələr</a>
+                <a href="#" class="dashboard-nav-item w-nav-item"><i class="fas fa-file-upload"></i>Fayl yüklə(JSON)</a>
+                <div class='dashboard-nav-dropdown'>
+                    <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+                        <i class="fas fa-photo-video"></i> Sözlər
+                    </a>
+                    <div class='dashboard-nav-dropdown-menu'>
+                        <a href="#" data-id="add-word" class="dashboard-nav-dropdown-item w-nav-item">Əlavə et</a>
+                        <a href="#" data-id="all-word" class="dashboard-nav-dropdown-item w-nav-item">Bütün sözlər</a>
+                    </div>
                 </div>
-                <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
+                <!-- <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                         class="fas fa-users"></i> Users </a>
                     <div class='dashboard-nav-dropdown-menu'><a href="#"
                                                                 class="dashboard-nav-dropdown-item">All</a><a
@@ -43,32 +44,37 @@
                             class="dashboard-nav-dropdown-item">Non-subscribed</a><a
                             href="#" class="dashboard-nav-dropdown-item">Banned</a><a
                             href="#" class="dashboard-nav-dropdown-item">New</a></div>
-                </div>
-                <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
+                </div> -->
+                <!-- <div class='dashboard-nav-dropdown'><a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i
                         class="fas fa-money-check-alt"></i> Payments </a>
                     <div class='dashboard-nav-dropdown-menu'><a href="#"
                                                                 class="dashboard-nav-dropdown-item">All</a><a
                             href="#" class="dashboard-nav-dropdown-item">Recent</a><a
                             href="#" class="dashboard-nav-dropdown-item"> Projections</a>
                     </div>
-                </div>
-                <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a
+                </div> -->
+                <!-- <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a><a
                         href="#" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
               <div class="nav-item-divider"></div>
               <a
-                        href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+                        href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a> -->
             </nav>
         </div>
         <div class='dashboard-app'>
             <header class='dashboard-toolbar'><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a></header>
             <div class='dashboard-content'>
-                <div class='container'>
-
+                <div class='container w-menu-tabs'>
+                    <div id="preloader" class="row justify-content-center">
+                        <div class="col-12 text-center bg-white p-3">
+                            <img src="libs/image/Spinner-0.7s-323px.svg" alt="">
+                        </div>
+                        
+                    </div>
 
                     <!-- WORD_QUESTION -->
 
 
-                    <div id="main-page" class='card d-none'>
+                    <div id="main-page" data-id="word-question" class='card d-none'>
                         <div class='card-header'>
                             <h1>Sual-Cavab</h1>
                         </div>
@@ -84,6 +90,23 @@
                                                 Hamisi
                                             </option>
                                         </select>
+                                        <label style="margin-left: 15px;" for="">
+                                            Dil
+                                        </label>
+                                        <select name="language" id="">
+                                            <option value="all">
+                                                Hamisi
+                                            </option>
+                                            <option value="az">
+                                               Azərbaycan
+                                            </option>
+                                            <option value="en">
+                                                İngilis
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="unit-select">
+                                       
                                     </div>
                                     <div class="main-word">
                                         <p class="word first">Word <i class="far fa-language"></i></p>
@@ -117,7 +140,7 @@
                     <!-- UNIT -->
 
 
-                    <div id="UNIT" class='card'>
+                    <div id="UNIT" data-id="unit" class='card d-none'>
                         <div class='card-header'>
                             <h1>Bolmeler</h1>
                         </div>
@@ -139,7 +162,53 @@
                                  </div>
                              </div>
                         </div>
+                    </div>
+                    <div id="add-word" data-id="add-word" class="card d-none">
+                        <div class='card-header'>
+                            <h1>Söz əlavə et</h1>
                         </div>
+                        <div class='card-body'>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="d-flex justify-content-center">
+                                        <form action="">
+                                            <div class="form-group">
+                                                <label for="">Bolmə</label>
+                                            <select class="unit" name="" id=""></select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Azərbaycan dili</label>
+                                                <input required type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">İngilis dili</label>
+                                                <input required type="text">
+                                            </div>
+                                            <div class="form-group">
+                                                <input style="cursor: pointer;background-color: #443ea2;color: white;" type="submit" value="Əlavə et">
+                                            </div>
+                                        </form>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div id="all-word" data-id="all-word" class='card d-none'>
+                        <div class='card-header'>
+                            <h1>Bütün sözlər</h1>
+                        </div>
+                        <div class='card-body'>
+                            <div class="row justify-content-center">
+                               <div class="word-content">
+
+                               </div>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
             </div>

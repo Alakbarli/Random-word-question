@@ -18,6 +18,23 @@ input,select{
 #word-question .main-word .word{
     margin-bottom: 5px;
 }
+
+#word-question .main-word svg{
+   cursor: pointer;
+   margin-left: 10px;
+   font-size: 17px;
+}
+#word-question .main-word .first{
+    font-size: 25px;
+    color: rgb(22, 57, 122);
+    font-family: inherit;
+    font-weight: bold;
+}
+#word-question .main-word .last{
+    font-size: 14px;
+    color: rgb(22, 57, 122);
+    font-family: inherit;
+}
 #word-question .input input{
     box-sizing: border-box;
     border-radius: 3px;
@@ -68,7 +85,7 @@ input,select{
     outline: none;
 }
 #main-page .random {
-
+user-select: none;
     margin-top:10px;
  font-size: 25px;
  color: rgb(22, 57, 122);

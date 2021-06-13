@@ -149,3 +149,88 @@ user-select: none;
 #add-word form{
     margin: 15px;
 }
+#add-word{
+    
+}
+#all-word input,#all-word select{
+        width: 100%;
+        height: 40px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border:1px solid #443ea2
+}
+#all-word input{
+   text-indent: 5px;
+}
+#all-word label{
+    display: block;
+    margin-top: 15px;
+}
+#all-word form{
+    margin: 15px;
+}
+#all-word .word-content svg{
+    display: inline-block;
+    margin: 0 5px 0 5px;
+    cursor: pointer;
+ }
+#all-word .word-content .edit{
+   color: rgb(20, 73, 172);
+}
+#all-word .word-content .remove{
+    color: red;
+}
+@media screen and (max-width:993px){
+    .table{
+        max-width: 70vw!important;
+        display: block !important;
+    }
+    #edit-word {
+       width: 70%;
+        }
+        #edit-word  form{
+            width: 100%;
+             }
+}
+
+
+#edit-word input,#edit-word select{
+    width: 100%;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border:1px solid #443ea2
+}
+#edit-word input{
+text-indent: 5px;
+}
+#edit-word input:invalid,#edit-word select:invalid{
+border:1px solid red
+}
+#edit-word label{
+display: block;
+}
+#edit-word form{
+margin: 15px;
+}
+#edit-word form{
+    margin: 15px; 
+}
+.edit-word-overlay{
+    width: 100%;
+    min-height: 100%;
+    z-index: 999099;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.781);
+}
+#edit-word{
+    
+    background-color: white;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+}

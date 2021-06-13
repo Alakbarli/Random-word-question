@@ -112,15 +112,21 @@ function synUnits(){
     if(newDb.Units.length>0){
         $("#UNIT ul").empty();
         $("#add-word .unit").empty();
+        $("#edit-word .unit").empty();
         $("#word-question .selectUnit").empty();
+        $("#all-word .selectUnit").empty();
         $("#add-word .unit").append(`<option value='0'>Secin</li>`);
+        $("#all-word .unit").append(`<option value='0'>Hamısı</li>`);
+        $("#edit-word .unit").append(`<option value='0'>Hamısı</li>`);
         $("#word-question .selectUnit").append(`<option value='0'>Hamısı</li>`);
         newDb.Units.forEach(
             function(e){
                 $("#UNIT ul").append(`<li data-id='${e.id}'>${e.name}</li>`);
                  $("#add-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
                  $("#word-question .selectUnit").append(`<option value='${e.id}'>${e.name}</li>`);
-            }
+                 $("#all-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
+                 $("#edit-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
+                }
         ); 
        
     }
@@ -129,9 +135,22 @@ function synUnits(){
 function synWords(){
     if(newDb.Words.length>0){
         $("#all-word .word-content").empty();
+        let cnt=1;
        newDb.Words.forEach(
             function(e){
-                $("#all-word .word-content").append(`<p>${e.nameAz+' - '+e.nameEn}</p>`);
+                $("#all-word .word-content")
+                .append(`
+                <tr data-id=${e.id}>
+                    <th scope="row">${cnt}</th>
+                    <td>${e.nameAz}</td>
+                    <td>${e.nameEn}</td>
+                    <td>
+                        <span class="edit"><i title="Düzəliş et" class="fal fa-edit"></i></span>
+                        <span class="remove"><i title="Sil" class="fal fa-trash-alt"></i></span>
+                    </td>
+                </tr>
+                `);
+               cnt++;
             }
         ); 
        
@@ -224,6 +243,9 @@ $(document).ready(function() {
                 $(this).addClass("d-none");
             }
         })
+        if(window.screen.width<993){
+            $(".dashboard-nav").removeClass("mobile-show");
+        }
     })
 
     //SYNC localstorage
@@ -321,6 +343,64 @@ $(document).ready(function() {
         $("#word-question .input .correct-icon").addClass("d-none");
         $("#word-question .input .wrong-icon").addClass("d-none");
     })
+
+
+
+
+    //edit word
+    $(document).on("click","#all-word .edit",function(){
+        $(".edit-word-overlay").removeClass("d-none");
+       let id= $(this).closest("tr").attr("data-id");
+       let tempWord=newDb.findWord(id,0);
+       $("#edit-word .id").val(id);
+       $("#edit-word .unit").val(tempWord.unitId);
+       $("#edit-word .az").val(tempWord.nameAz);
+       $("#edit-word .en").val(tempWord.nameEn);
+    });
+
+    $(document).on("click","#edit-word .edit",function(){
+          let id=$("#edit-word .id").val();
+          newDb.findWord(id,0).unitId=$("#edit-word .unit").val();
+          newDb.findWord(id,0).nameAz=$("#edit-word .az").val();
+          newDb.findWord(id,0).nameEn=$("#edit-word .en").val();
+     
+          setDbLocalstorage();
+          synWords();
+          $("#edit-word .unit").val('0');
+          $("#edit-word .az").val();
+          $("#edit-word .en").val();
+          $(".edit-word-overlay").addClass("d-none")
+    });
+    
+     //remove word
+
+     $(document).on("click","#all-word .remove",function(){
+       let id= $(this).closest("tr").attr("data-id");
+       newDb.filterWord(id);
+       setDbLocalstorage();
+       synWords();
+
+    });
+
+
+    ///close edit modal
+    $(document).on("click",".forClose",function(){
+        $("#edit-word .unit").val('0');
+       $("#edit-word .az").val();
+       $("#edit-word .en").val();
+        $(".edit-word-overlay").addClass("d-none")
+    });
+    $(document).on("click","#edit-word .close",function(){
+        $("#edit-word .unit").val('0');
+       $("#edit-word .az").val();
+       $("#edit-word .en").val();
+        $(".edit-word-overlay").addClass("d-none")
+    });
+
+
+
+
+   // $(document).on("click","#edit-word")
       //Clear localstorage
       RunPopUp("upopup-item","href",false,"Yaddaşı təmizləmək istədiyinizdən əminsinizmi?","Təmizlə","Bağla","fad fa-trash-alt")
       
@@ -330,6 +410,7 @@ $(document).ready(function() {
       //Romeve preloader
       $("#preloader").addClass("d-none");
 
+      
       //select change event
       $("#main-page .selectUnit").change(function(){
         newDb.unitSelectVal=$(this).val();

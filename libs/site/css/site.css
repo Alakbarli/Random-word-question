@@ -22,7 +22,8 @@ input,select{
 #word-question .main-word svg{
    cursor: pointer;
    margin-left: 10px;
-   font-size: 17px;
+   font-size: 25px;
+   color:rgb(22, 57, 122);
 }
 #word-question .main-word .first{
     font-size: 25px;
@@ -87,7 +88,7 @@ input,select{
 #main-page .random {
 user-select: none;
     margin-top:10px;
- font-size: 25px;
+ font-size: 40px;
  color: rgb(22, 57, 122);
 }
 #main-page .random svg{cursor: pointer;}
@@ -169,15 +170,15 @@ user-select: none;
 #all-word form{
     margin: 15px;
 }
-#all-word .word-content svg{
+#all-word .word-content svg,#UNIT .word-content svg{
     display: inline-block;
     margin: 0 5px 0 5px;
     cursor: pointer;
  }
-#all-word .word-content .edit{
+#all-word .word-content .edit,#UNIT .word-content .edit{
    color: rgb(20, 73, 172);
 }
-#all-word .word-content .remove{
+#all-word .word-content .remove,#UNIT .word-content .remove{
     color: red;
 }
 @media screen and (max-width:993px){
@@ -185,38 +186,38 @@ user-select: none;
         max-width: 70vw!important;
         display: block !important;
     }
-    #edit-word {
+    #edit-word,#edit-unit  {
        width: 70%;
-        }
-        #edit-word  form{
-            width: 100%;
-             }
+     }
+    #edit-word  form,#edit-unit form{
+         width: 100%;
+     }
 }
 
 
-#edit-word input,#edit-word select{
+#edit-word input,#edit-word select,#edit-unit input,#edit-unit select{
     width: 100%;
     height: 40px;
     box-sizing: border-box;
     border-radius: 5px;
     border:1px solid #443ea2
 }
-#edit-word input{
+#edit-word input,#edit-unit input{
 text-indent: 5px;
 }
-#edit-word input:invalid,#edit-word select:invalid{
+#edit-word input:invalid,#edit-word select:invalid,#edit-unit input:invalid,#edit-unit select:invalid{
 border:1px solid red
 }
-#edit-word label{
+#edit-word label,#edit-unit label{
 display: block;
 }
-#edit-word form{
+#edit-word form,#edit-unit form{
 margin: 15px;
 }
-#edit-word form{
+#edit-word form,#edit-unit form{
     margin: 15px; 
 }
-.edit-word-overlay{
+.edit-word-overlay,.edit-unit-overlay{
     width: 100%;
     min-height: 100%;
     z-index: 999099;
@@ -225,7 +226,7 @@ margin: 15px;
     left: 0;
     background-color: rgba(0, 0, 0, 0.781);
 }
-#edit-word{
+#edit-word,#edit-unit{
     
     background-color: white;
     position: fixed;
@@ -233,4 +234,21 @@ margin: 15px;
     left: 50%;
     transform: translateX(-50%);
 
+}
+#add-json{
+
+}
+
+#add-json input{
+
+}
+#add-json svg{
+    width: 60px!important;
+    height: 60px!important;
+    color:#443ea2 ;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+#add-json svg:hover{
+   transform: scale(1.2);
 }

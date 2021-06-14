@@ -25,10 +25,9 @@
             <nav class="dashboard-nav-list my-nav">
                  <a href="#" data-id="word-question" class="dashboard-nav-item w-nav-item active"><i class="fas fa-home"></i> Sual cavab </a>
                 <a href="#" id="save-json" class="dashboard-nav-item w-nav-item"><i class="fad fa-save"></i>Json faylına yaz</a>
-                <a href="#" id="save-json" class="dashboard-nav-item w-nav-item"><i class="fad fa-save"></i>Json faylına yaz</a>
                 <a href="#" class="dashboard-nav-item upopup-item"><i class="fad fa-trash-alt"></i>Yaddaşı təmizlə</a>
                 <a href="#" data-id="unit" class="dashboard-nav-item w-nav-item"><i class="fas fa-tachometer-alt"></i>Bölmələr</a>
-                <a href="#" class="dashboard-nav-item w-nav-item"><i class="fas fa-file-upload"></i>Fayl yüklə(JSON)</a>
+                <a href="#" data-id="add-json" class="dashboard-nav-item w-nav-item"><i class="fas fa-file-upload"></i>Fayl yüklə(JSON)</a>
                 <div class='dashboard-nav-dropdown'>
                     <a href="#!" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
                         <i class="fas fa-photo-video"></i> Sözlər
@@ -164,6 +163,26 @@
                                      </ul>
                                  </div>
                              </div>
+                             <div class="row">
+                                <div class="col-12">
+                                    <div class="table-content">
+                                        <div style="overflow-x:auto" class="table-responsive-sm">
+                                            <table class="table" style="overflow-x:auto">
+                                                 <thead>
+                                                     <tr>
+                                                         <th>#</th>
+                                                         <th>Ad</th>
+                                                         <th>Əməlliyyat</th>
+                                                     </tr>
+                                                 </thead>
+                                                 <tbody class="word-content">
+                                                 </tbody>
+                                            </table>
+                                         </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="add-word" data-id="add-word" class="card d-none">
@@ -207,7 +226,7 @@
                             <h1>Bütün sözlər</h1>
                         </div>
                         <div class='card-body'>
-                            <!-- <div class="row justify-content-center">
+                            <div class="row justify-content-center">
                                 <div class="col-12 mb-3">
                                     <div class="d-flex justify-content-center">
                                         <div class="row">
@@ -217,18 +236,18 @@
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <label for="">Azərbaycanca</label>
-                                                <input type="text">
+                                                <input class="nAz" type="text">
                                             </div>
                                             <div class="col-12 col-md-4">
                                                 <label for="">İngiliscə</label>
-                                                <input type="text">
+                                                <input class="nEn" type="text">
                                             </div>
                                         </div>
                                         
                                         
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-content">
@@ -239,6 +258,7 @@
                                                          <th>#</th>
                                                          <th>Azərbaycanca</th>
                                                          <th>İngiliscə</th>
+                                                         <th>Bölmə</th>
                                                          <th>Əməlliyyat</th>
                                                      </tr>
                                                  </thead>
@@ -251,6 +271,25 @@
                                 </div>
                             </div>
                             
+                        </div>
+                    </div>
+                    <div id="add-json" data-id="add-json" class="card">
+                        <div class='card-header'>
+                            <h1>Json yüklə</h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="json-alert d-none">
+                                <div class="alert alert-danger" role="alert">
+                                    Düzgün fayl seçin.
+                                  </div>
+                            </div>
+                            <input class="d-none" type="file">
+                            <div class="d-flex justify-content-center">
+                                <i class="fad fa-upload"></i>
+                            </div>
+                            <div class="units"></div>
+                            <div class="words"></div>
+                            <button class="d-none" style="margin: 10px;border: none;background-color: #443ea2;color: white;cursor: pointer;">Əlavə et</button>
                         </div>
                     </div>
                     </div>
@@ -276,6 +315,26 @@
                     <div class="form-group">
                         <label for="">İngilis dili</label>
                         <input class="en" required type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="edit" style="cursor: pointer;background-color: #443ea2;color: white;" type="submit" value="Düzəliş et">
+                        <input class="close" style="cursor: pointer;background-color: white;color: #443ea2;margin-top: 10px;" type="submit" value="Bağla">
+                    </div>
+                </form>
+                
+                
+            </div>
+        </div>
+    </div>
+    <div class="edit-unit-overlay d-none">
+        <div class="forClose2" style="width: 100%;height: 100%;position: absolute;"></div>
+        <div id="edit-unit">
+            <div class="d-flex justify-content-center">
+                <form action="">
+                    <input class="id" type="hidden">
+                    <div class="form-group">
+                        <label for="">Azərbaycan dili</label>
+                        <input class="name" required type="text">
                     </div>
                     <div class="form-group">
                         <input class="edit" style="cursor: pointer;background-color: #443ea2;color: white;" type="submit" value="Düzəliş et">

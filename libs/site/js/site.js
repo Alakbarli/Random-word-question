@@ -2,6 +2,7 @@ let no=1;
 let wNo=1;
 let employeeId=1;
 let currentWordId=null;
+let addingJson=false;
 
 //DB CLASSES
 
@@ -44,6 +45,12 @@ class DB{
             ((unitId==0)?true:w.unitId==unitId)
             )
     }
+    findWordByUnitId(unitId)
+    { let w=this.Words;
+        return w.filter(
+            w=>w.unitId==unitId
+            )
+    }
     filterWord(id){
         return this.Words=this.Words.filter(w=>w.id!=id);
     }
@@ -69,28 +76,6 @@ function findLastIdWord(){
     )
     wNo=wId+1;
 }
-function getLastIdWord(){
-    let newn=newDb.Words[0].id;
-    newDb.Words.forEach(
-        function(w){
-            if(newn<w.id){
-                newn=w.id;
-            }
-        }
-    )
-    return newn;
-}
-function getFirstIdWord(){
-    let newn=newDb.Words[0].id;
-    newDb.Words.forEach(
-        function(w){
-            if(newn>w.id){
-                newn=w.id;
-            }
-        }
-    )
-    return newn;
-}
 function findLastIdUnit(){
     let uId=no;
     newDb.Units.forEach(
@@ -110,7 +95,8 @@ function setDbLocalstorage(){
 //Unit HTML
 function synUnits(){
     if(newDb.Units.length>0){
-        $("#UNIT ul").empty();
+        $("#UNIT .word-content").empty();
+        let cnt=1;
         $("#add-word .unit").empty();
         $("#edit-word .unit").empty();
         $("#word-question .selectUnit").empty();
@@ -121,22 +107,36 @@ function synUnits(){
         $("#word-question .selectUnit").append(`<option value='0'>Hamısı</li>`);
         newDb.Units.forEach(
             function(e){
-                $("#UNIT ul").append(`<li data-id='${e.id}'>${e.name}</li>`);
-                 $("#add-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
+                $("#add-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
                  $("#word-question .selectUnit").append(`<option value='${e.id}'>${e.name}</li>`);
                  $("#all-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
                  $("#edit-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
+                 $("#UNIT .word-content")
+                .append(`
+                <tr data-id=${e.id}>
+                    <th scope="row">${cnt}</th>
+                    <td>${e.name}</td>
+                    <td>
+                        <span class="edit"><i title="Düzəliş et" class="fal fa-edit"></i></span>
+                        <span class="remove"><i title="Sil" class="fal fa-trash-alt"></i></span>
+                    </td>
+                </tr>
+                `);
+               cnt++;
                 }
         ); 
        
     }
 }
 
-function synWords(){
-    if(newDb.Words.length>0){
-        $("#all-word .word-content").empty();
+function synWords(words=[],searchWord=false){
+    if(!searchWord){
+        words=newDb.Words;
+    }
+    $("#all-word .word-content").empty();
+    if(words.length>0){
         let cnt=1;
-       newDb.Words.forEach(
+        words.forEach(
             function(e){
                 $("#all-word .word-content")
                 .append(`
@@ -144,6 +144,7 @@ function synWords(){
                     <th scope="row">${cnt}</th>
                     <td>${e.nameAz}</td>
                     <td>${e.nameEn}</td>
+                    <td>${((newDb.findUnit(e.unitId)!=undefined)?newDb.findUnit(e.unitId).name:"Yoxdur")}</td>
                     <td>
                         <span class="edit"><i title="Düzəliş et" class="fal fa-edit"></i></span>
                         <span class="remove"><i title="Sil" class="fal fa-trash-alt"></i></span>
@@ -182,47 +183,68 @@ function generateRandomNumber (min, max){
 function generateWordForQustion(){
     let unt=$("#main-page .selectUnit").val();
     let lang=$("#main-page .languageSelect").val();
-    let rnm=generateRandomNumber(getFirstIdWord(),getLastIdWord());
-    while(rnm==currentWordId){
-        rnm=generateRandomNumber(getFirstIdWord(),getLastIdWord());
-    }
-    let word=newDb.findWord(rnm,unt);
-    currentWordId=word.id;
-    let first;
-    let last;
-    if(word){
-        $("#word-question .main-word .last").addClass("d-none");
-        $("#word-question .main-word svg").removeClass("d-none");
-        $("#word-question .input .check-answer").removeClass("d-none");
-        $("#word-question .input").removeClass("d-none");
-        if(lang==0){
-            let rndmN=generateRandomNumber(0,1);
-            if(rndmN==1){
-                first=  word.nameAz;
-                last=  word.nameEn;
+    let words=((unt>0)?newDb.findWordByUnitId(unt):newDb.Words);
+    if(words.length>0){
+        let rnm=0;
+        if(words.length>1){
+            rnm=generateRandomNumber(0,words.length);
+            while(rnm==currentWordId){
+                rnm=generateRandomNumber(0,words.length);
             }
-            else{
-                last=  word.nameAz;
-                first=  word.nameEn;}
         }
-        else if(lang=="az"){
-            first=  word.nameAz;
-                last=  word.nameEn;
+        let word=words[rnm];
+        currentWordId=rnm;
+        let first;
+        let last;
+        if(word){
+              $("#word-question .main-word .last").addClass("d-none");
+              $("#word-question .main-word svg").removeClass("d-none");
+              $("#word-question .input .check-answer").removeClass("d-none");
+              $("#word-question .input").removeClass("d-none");
+              if(lang==0){
+                 let rndmN=generateRandomNumber(0,2);
+                 if(rndmN==1){
+                     first=  word.nameAz;
+                     last=  word.nameEn;
+                  }
+                  else{
+                      last=  word.nameAz;
+                       first=  word.nameEn;}
+                }
+                else if(lang=="az"){
+                     first=  word.nameAz;
+                     last=  word.nameEn;
+                }
+                else{
+                     last=  word.nameAz;
+                     first=  word.nameEn;
+                }  
+              $("#word-question .main-word .first").text(first);
+              $("#word-question .main-word .last").text(last);
         }
-        else{
-            last=  word.nameAz;
-            first=  word.nameEn;
-        } 
-        $("#word-question .main-word .first").text(first);
-        $("#word-question .main-word .last").text(last);
     }
+    
 }
 function checkWord() {
     let translated=$("#word-question .main-word .last").text();
     let answer=$("#word-question .input input").val();
+    
     if(answer&&answer.trim()){
-        return translated.toLowerCase()==answer.toLowerCase();
+        return translated.split(",")
+        .some(x=>answer.split(",")
+        .some(y=>y.toLowerCase()==x.toLowerCase()));
     }
+}
+
+//Search word
+function searchWord(unitId,nameAz,nameEn){
+
+    let words=newDb.Words;
+       return words.filter(x=>
+            ((unitId==0)?true:x.unitId==unitId)&&
+            ((nameAz==undefined||nameAz==null||nameAz==''||nameAz.trim()=="")?true:x.nameAz.toLowerCase().includes(nameAz.toLowerCase()))&&
+            ((nameEn==undefined||nameEn==null||nameEn==''||nameEn.trim()=="")?true:x.nameEn.toLowerCase().includes(nameEn.toLowerCase()))
+            )
 }
 //HTML redy
 
@@ -320,7 +342,6 @@ $(document).ready(function() {
 
       //Translate
       $(document).on("click","#word-question .main-word .word svg",function(e) {
-        console.log("s");
         $("#word-question .main-word .last").last().removeClass("d-none");
     });
 
@@ -358,7 +379,19 @@ $(document).ready(function() {
        $("#edit-word .en").val(tempWord.nameEn);
     });
 
-    $(document).on("click","#edit-word .edit",function(){
+    //Edit Unit
+    $(document).on("click","#UNIT .edit",function(){
+        $(".edit-unit-overlay").removeClass("d-none");
+       let id= $(this).closest("tr").attr("data-id");
+       let tempWord=newDb.findUnit(id);
+       $("#edit-unit .id").val(id);
+       $("#edit-unit .name").val(tempWord.name);
+    });
+
+    //modal edit word
+
+    $(document).on("click","#edit-word .edit",function(e){
+        e.preventDefault();
           let id=$("#edit-word .id").val();
           newDb.findWord(id,0).unitId=$("#edit-word .unit").val();
           newDb.findWord(id,0).nameAz=$("#edit-word .az").val();
@@ -371,6 +404,19 @@ $(document).ready(function() {
           $("#edit-word .en").val();
           $(".edit-word-overlay").addClass("d-none")
     });
+    //Modal edit unit
+    $(document).on("click","#edit-unit .edit",function(e){
+        e.preventDefault();
+          let id=$("#edit-unit .id").val();
+          newDb.findUnit(id).name=$("#edit-unit .name").val();
+     
+          setDbLocalstorage();
+          synUnits();
+          synWords();
+          $("#edit-unit .name").val();
+          $(".edit-unit-overlay").addClass("d-none")
+    });
+
     
      //remove word
 
@@ -381,6 +427,20 @@ $(document).ready(function() {
        synWords();
 
     });
+
+     //remove unit
+
+     $(document).on("click","#UNIT .remove",function(){
+        let id= $(this).closest("tr").attr("data-id");
+        if(newDb.Words.some(x=>x.unitId==id)){
+            alert("Bölməyə aid sözlər olduğu üçün bölmə silinə bilməz.")
+            return;
+        }
+        newDb.filterUnit(id);
+        setDbLocalstorage();
+        synWords();
+        synUnits();
+     });
 
 
     ///close edit modal
@@ -397,6 +457,104 @@ $(document).ready(function() {
         $(".edit-word-overlay").addClass("d-none")
     });
 
+    ///close edit modal
+    $(document).on("click",".forClose2",function(){
+       $("#UNIT .name").val();
+        $(".edit-unit-overlay").addClass("d-none")
+    });
+    $(document).on("click","#edit-unit .close",function(){
+        $("#edit-unit .name").val();
+        $(".edit-unit-overlay").addClass("d-none")
+    });
+
+
+    //all words table filter
+    $(document).on("change","#all-word .unit",function(e){
+        let uId=$(this).val();
+        let az=$("#all-word .nAz").val();
+        let en=$("#all-word .nEn").val();
+        let words=searchWord(uId,az,en);
+        synWords(words,true);
+    })
+    $(document).on("keyup","#all-word .nAz",function(e){
+        let uId=$("#all-word .unit").val();
+        let az=$("#all-word .nAz").val();
+        let en=$("#all-word .nEn").val();
+        let words=searchWord(uId,az,en);
+        synWords(words,true);
+    })
+    $(document).on("keyup","#all-word .nEn",function(e){
+        let uId=$("#all-word .unit").val();
+        let az=$("#all-word .nAz").val();
+        let en=$("#all-word .nEn").val();
+        let words=searchWord(uId,az,en);
+        synWords(words,true);
+    })
+
+    //Add json
+
+    $(document).on("click","#add-json svg",function(){
+        $("#add-json input").click();
+    })
+    $("#add-json input").change(function (event) {
+        $("#add-json .json-alert").addClass("d-none");
+        $("#add-json button").addClass("d-none");
+        $("#add-json .units").empty();
+        $("#add-json .words").empty();
+        let file=event.target.files[0];
+        if(file.type!="application/json"){
+            $("#add-json .json-alert").removeClass("d-none");
+            $(this).val("");
+        }
+        if ($(this).val() != ""&&$(this).val()) {
+             let reader = new FileReader;
+             reader.onloadend = function (rd) {
+                $("#add-json button").removeClass("d-none");
+                 let json=JSON.parse(rd.target.result);
+                 $("#add-json .units").append(`<span>Bölmələr : </span>`)
+                 $("#add-json .words").append(`<span>Sözlər : </span>`)
+                 json.Units.forEach((x)=>{
+                    $("#add-json .units").append(`<span>${x.name} </span>`)
+                 })
+                 json.Words.forEach((x)=>{
+                    $("#add-json .words").append(`<span>${x.nameAz} </span>`)
+                 })
+                 addingJson=json;
+             }
+             reader.readAsText(file);
+             
+            // $("#profilePhoto img").removeClass("d-none");
+            // $("#addPhoto").text("Edit photo");
+        }
+        else {
+            // $("#profilePhoto img").attr("src", "");
+            // $("#profilePhoto img").addClass("d-none");
+            // $("#addPhoto").text("Add photo");
+        }
+    
+    });
+    $("#add-json button").click(function(){
+        if(addingJson){
+            newDb.activePage=addingJson.activePage;
+            newDb.unitSelectVal=addingJson.unitSelectVal;
+            newDb.languageVal=newDb.languageVal;
+            addingJson.Units.forEach((x)=>{
+                newDb.Units.push(x);
+             })
+             addingJson.Words.forEach((x)=>{
+                newDb.Words.push(x);
+             })
+             console.log(newDb.Words);
+            setDbLocalstorage();
+            findLastIdUnit();
+            findLastIdWord();
+            synWords();
+            synUnits();
+            synPage();
+            window.location.reload();
+
+        }
+    })
 
 
 

@@ -197,6 +197,7 @@ function generateWordForQustion(){
         let first;
         let last;
         if(word){
+              $("#word-question input").val("");
               $("#word-question .main-word .last").addClass("d-none");
               $("#word-question .main-word svg").removeClass("d-none");
               $("#word-question .input .check-answer").removeClass("d-none");

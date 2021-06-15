@@ -252,3 +252,7 @@ margin: 15px;
 #add-json svg:hover{
    transform: scale(1.2);
 }
+.dashboard-nav-dropdown-menu svg,.dashboard-nav-dropdown svg{
+    display: inline-block;
+    margin-right: 10px;
+}

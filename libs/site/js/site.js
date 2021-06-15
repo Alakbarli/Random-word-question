@@ -100,6 +100,7 @@ function synUnits(){
         $("#add-word .unit").empty();
         $("#edit-word .unit").empty();
         $("#word-question .selectUnit").empty();
+        $("#all-word .unit").empty();
         $("#all-word .selectUnit").empty();
         $("#add-word .unit").append(`<option value='0'>Secin</li>`);
         $("#all-word .unit").append(`<option value='0'>Hamısı</li>`);

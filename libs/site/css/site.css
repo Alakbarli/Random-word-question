@@ -30,6 +30,7 @@ input,select{
     color: rgb(22, 57, 122);
     font-family: inherit;
     font-weight: bold;
+    word-break: break-all;
 }
 #word-question .main-word .last{
     font-size: 14px;

@@ -102,18 +102,12 @@ function synUnits(){
         $("#word-question .selectUnit").empty();
         $("#all-word .unit").empty();
         $("#all-word .selectUnit").empty();
-        $("#add-word .unit").append(`<option value='0'>Secin</li>`);
-        $("#all-word .unit").append(`<option value='0'>Hamısı</li>`);
-        $("#edit-word .unit").append(`<option value='0'>Hamısı</li>`);
-        $("#word-question .selectUnit").append(`<option value='0'>Hamısı</li>`);
+        let unitHtml="";
+        let selectHtml="<option value='0'>Secin</li>";
         newDb.Units.forEach(
             function(e){
-                $("#add-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
-                 $("#word-question .selectUnit").append(`<option value='${e.id}'>${e.name}</li>`);
-                 $("#all-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
-                 $("#edit-word .unit").append(`<option value='${e.id}'>${e.name}</li>`);
-                 $("#UNIT .word-content")
-                .append(`
+                selectHtml+=`<option value='${e.id}'>${e.name}</li>`;
+                unitHtml+=`
                 <tr data-id=${e.id}>
                     <th scope="row">${cnt}</th>
                     <td>${e.name}</td>
@@ -122,10 +116,15 @@ function synUnits(){
                         <span class="remove"><i title="Sil" class="fal fa-trash-alt"></i></span>
                     </td>
                 </tr>
-                `);
+                `;
                cnt++;
                 }
         ); 
+        $("#add-word .unit").html(selectHtml);
+        $("#word-question .selectUnit").html(selectHtml);
+        $("#all-word .unit").html(selectHtml);
+        $("#edit-word .unit").html(selectHtml);
+        $("#UNIT .word-content").html(unitHtml)
        
     }
 }
@@ -134,13 +133,14 @@ function synWords(words=[],searchWord=false){
     if(!searchWord){
         words=newDb.Words;
     }
-    $("#all-word .word-content").empty();
+    let wordTable=$("#all-word .word-content");
+    wordTable.empty();
     if(words.length>0){
         let cnt=1;
+        wordHtml="";
         words.forEach(
             function(e){
-                $("#all-word .word-content")
-                .append(`
+                wordHtml+= `
                 <tr data-id=${e.id}>
                     <th scope="row">${cnt}</th>
                     <td>${e.nameAz}</td>
@@ -151,10 +151,11 @@ function synWords(words=[],searchWord=false){
                         <span class="remove"><i title="Sil" class="fal fa-trash-alt"></i></span>
                     </td>
                 </tr>
-                `);
+                `;
                cnt++;
             }
         ); 
+        wordTable.html(wordHtml);
        
     }
 }
@@ -400,7 +401,13 @@ $(document).ready(function() {
           newDb.findWord(id,0).nameEn=$("#edit-word .en").val();
      
           setDbLocalstorage();
-          synWords();
+          if($("#all-word .unit").val()=='0'){
+             synWords();
+          }
+          else{
+            let words=searchWord($("#all-word .unit").val(),'','');
+            synWords(words,true);
+          }
           $("#edit-word .unit").val('0');
           $("#edit-word .az").val();
           $("#edit-word .en").val();
